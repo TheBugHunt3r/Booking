@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -23,6 +24,12 @@ public class SearchStep {
     @Before
     public void setup() {
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--lang=en");
+        options.addArguments("--accept-lang=en");
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
     }
@@ -68,8 +75,8 @@ public class SearchStep {
                 By.cssSelector("[data-testid='review-score'] > div:first-child + div")
         );
         String actualRating = ratingElement.getText();
-        softAssert.assertEquals(actualRating, "9,1",
-                "Рейтинг должен быть 9,1");
+        softAssert.assertEquals(actualRating, "9.1",
+                "Рейтинг должен быть 9.1");
         softAssert.assertTrue(ratingElement.isDisplayed(),
                 "Элемент с рейтингом должен быть видим");
         softAssert.assertAll();
