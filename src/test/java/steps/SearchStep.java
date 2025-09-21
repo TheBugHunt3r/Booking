@@ -17,6 +17,8 @@ import org.testng.asserts.SoftAssert;
 import java.time.Duration;
 import java.util.List;
 
+import static dto.Elements.*;
+
 public class SearchStep {
 
     WebDriver driver;
@@ -36,21 +38,21 @@ public class SearchStep {
 
     @Given("booking search page is opened")
     public void bookingSearchPageIsOpened() throws InterruptedException {
-        driver.get("https://www.booking.com/searchresults.en-gb.html");
+        driver.get(BASE_URL);
         Thread.sleep(5000);
     }
 
     @When("user searches for {string}")
     public void userSearchesFor(String hotel) throws InterruptedException {
-        driver.findElement(By.xpath("//input[@name='ss']")).sendKeys(hotel);
-        driver.findElement(By.xpath(String.format("//ul[@role='group']//*[contains(text(), '%s')]", hotel))).click();
-        driver.findElement(By.xpath("//button[@type='submit']")).click();
+        driver.findElement(By.xpath(SEARCH_INPUT)).sendKeys(hotel);
+        driver.findElement(By.xpath(String.format(HOTEL, hotel))).click();
+        driver.findElement(By.xpath(SUBMIT_BUTTON)).click();
         Thread.sleep(5000);
     }
 
     @Then("{string} is shown")
     public void isShown(String expectedResult) {
-        List<WebElement> titles = driver.findElements(By.xpath("//div[@data-testid='title']"));
+        List<WebElement> titles = driver.findElements(By.xpath(HOTELS));
         boolean isHotelFound = false;
         for (WebElement title : titles) {
             if (title.getText().equals(expectedResult)) {
@@ -72,7 +74,7 @@ public class SearchStep {
     public void hotelHasRating(String arg0) {
         SoftAssert softAssert = new SoftAssert();
         WebElement ratingElement = driver.findElement(
-                By.cssSelector("[data-testid='review-score'] > div:first-child + div")
+                By.cssSelector(RATING)
         );
         String actualRating = ratingElement.getText();
         softAssert.assertEquals(actualRating, "9.1",
