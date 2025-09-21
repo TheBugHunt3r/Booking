@@ -6,5 +6,5 @@ public class Elements {
     public static String SUBMIT_BUTTON = "//button[@type='submit']";
     public static String HOTELS = "//div[@data-testid='title']";
     public static String RATING = "[data-testid='review-score'] > div:first-child + div";
-    public static String HOTEL = "//ul[@role='group']//*[contains(text(), '%s')]";
+    public static String HOTEL = "//ul[@role='group']//*[contains(text(), '%s')]"; 
 }

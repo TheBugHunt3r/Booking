@@ -10,4 +10,5 @@ import io.cucumber.testng.CucumberOptions;
                 "json:target/cucumber.json"}
 )
 public class BookingSearchTest extends AbstractTestNGCucumberTests {
+
 }
